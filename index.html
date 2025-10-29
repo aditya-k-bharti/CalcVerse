@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CalcVerse - Universal Calculator</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="calcVerse.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Left: Calculator -->
+
+    <main class="card calculator-card" id="calculatorCard">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">CV</div>
+          <div class="brand-text">
+            <h1>CalcVerse</h1>
+            <p class="muted">Universal Calculator · Basic · Scientific · Financial · Business · Printing · Programmable</p>
+          </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="controls">
+          <div class="theme-group">
+            <span class="muted">Theme</span>
+            <button id="themeToggle" class="toggle" aria-pressed="false" title="Toggle theme"></button>
+          </div>
+          <button id="openPanelMobile" class="btn-ghost mobile-only" title="Open panels (mobile)">Panels</button>
+        </div>
+      </header>
+
+      <nav class="tabs" id="modeTabs" role="tablist" aria-label="Calculator modes">
+        <button class="tab active" data-mode="basic" type="button">Basic</button>
+        <button class="tab" data-mode="scientific" type="button">Scientific</button>
+        <button class="tab" data-mode="financial" type="button">Financial</button>
+        <button class="tab" data-mode="business" type="button">Business</button>
+        <button class="tab" data-mode="printing" type="button">Printing</button>
+        <button class="tab" data-mode="programmable" type="button">Programmable</button>
+      </nav>
+
+      <section class="calc">
+        <div class="display" aria-live="polite">
+          <div class="small" id="modeLabel">Mode: Basic</div>
+          <!-- Full expression line -->
+
+          <div id="exprDisplay" class="expr"></div>
+          <!-- Main big text (current / result) -->
+
+          <div id="display" class="value">0</div>
+        </div>
+
+        <!-- Keys grid: arranged to match design with scientific keys next to operators -->
+
+        <div id="keys" class="keys" role="group" aria-label="Calculator keys">
+          <!-- Desktop layout -->
+          <!-- row 1: Clear, Back, %, /, Margin, Markup -->
+
+          <button class="key ghost" data-action="clear" type="button">C</button>
+          <button class="key ghost" data-action="back" type="button">←</button>
+          <button class="key ghost" data-action="percent" type="button">%</button>
+          <button class="key ghost" data-action="divide" type="button">/</button>
+          <button class="key ghost sci desktop-sci" data-action="margin" type="button">Margin</button>
+          <button class="key ghost sci desktop-sci" data-action="markup" type="button">Markup</button>
+
+          <!-- row 2: 7, 8, 9, *, √, +/- -->
+
+          <button class="key" data-num="7" type="button">7</button>
+          <button class="key" data-num="8" type="button">8</button>
+          <button class="key" data-num="9" type="button">9</button>
+          <button class="key op" data-action="multiply" type="button">*</button>
+          <button class="key op ghost sci desktop-sci" data-action="sqrt" type="button">√</button>
+          <button class="key op ghost sci desktop-sci" data-action="plusminus" type="button">+/-</button>
+
+          <!-- row 3: 4, 5, 6, -, x², 1/x -->
+
+          <button class="key" data-num="4" type="button">4</button>
+          <button class="key" data-num="5" type="button">5</button>
+          <button class="key" data-num="6" type="button">6</button>
+          <button class="key op" data-action="subtract" type="button">-</button>
+          <button class="key op ghost sci desktop-sci" data-action="pow" type="button">x²</button>
+          <button class="key op ghost sci desktop-sci" data-action="inv" type="button">1/x</button>
+
+          <!-- row 4: 1, 2, 3, +, sin, cos -->
+
+          <button class="key" data-num="1" type="button">1</button>
+          <button class="key" data-num="2" type="button">2</button>
+          <button class="key" data-num="3" type="button">3</button>
+          <button class="key op" data-action="add" type="button">+</button>
+          <button class="key op ghost sci desktop-sci" data-action="sin" type="button">sin</button>
+          <button class="key op ghost sci desktop-sci" data-action="cos" type="button">cos</button>
+
+          <!-- row 5: 0 (wide), ., =, tan -->
+
+          <button class="key wide" data-num="0" type="button">0</button>
+          <button class="key" data-action="dot" type="button">.</button>
+          <button class="key strong" data-action="equals" type="button">=</button>
+          <button class="key op wide ghost sci desktop-sci" data-action="tan" type="button">tan</button>
+
+          <!-- Mobile Scientific Keys (hidden by default, shown when scientific mode is active) -->
+          <!-- row 6: margin, markup, √, +/- -->
+
+          <button class="key ghost sci mobile-sci" data-action="margin" type="button">Margin</button>
+          <button class="key ghost sci mobile-sci" data-action="markup" type="button">Markup</button>
+          <button class="key ghost sci mobile-sci" data-action="sqrt" type="button">√</button>
+          <button class="key ghost sci mobile-sci" data-action="plusminus" type="button">+/-</button>
+
+          <!-- row 7: x², 1/x, sin, cos -->
+
+          <button class="key ghost sci mobile-sci" data-action="pow" type="button">x²</button>
+          <button class="key ghost sci mobile-sci" data-action="inv" type="button">1/x</button>
+          <button class="key ghost sci mobile-sci" data-action="sin" type="button">sin</button>
+          <button class="key ghost sci mobile-sci" data-action="cos" type="button">cos</button>
+
+          <!-- row 8: tan -->
+
+          <button class="key ghost sci mobile-sci" data-action="tan" type="button">tan</button>
+          <button class="key ghost sci mobile-sci" data-action="factorial" type="button">!</button>
+          <button class="key ghost sci mobile-sci" data-action="openParen" type="button">(</button>
+          <button class="key ghost sci mobile-sci" data-action="closeParen" type="button">)</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Right: panels (desktop) / drawer (mobile) -->
+
+    <aside class="side" id="sidePanels">
+      <div class="card">
+        <div class="panel-title">Memory</div>
+        <div class="memory-row">
+          <div id="memoryValue" class="memory-value">0</div>
+          <div class="chip-row">
+            <button class="chip" id="mc" type="button">MC</button>
+            <button class="chip" id="mr" type="button">MR</button>
+            <button class="chip" id="mplus" type="button">M+</button>
+            <button class="chip" id="mminus" type="button">M-</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="panel-title">History</div>
+        <div id="historyList" class="history-list">
+          <div class="muted">No history yet</div>
+        </div>
+        <div class="history-actions">
+          <button class="btn-ghost" id="clearHistory">Clear</button>
+          <button class="btn-ghost" id="printHistory">Print</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="panel-title">Quick</div>
+        <div class="muted">Common helpers</div>
+        <div class="quick">
+          <button id="copyBtn" class="btn-ghost">Copy</button>
+          <button id="pvfmpt" class="btn-ghost">PV/FV/PMT</button>
+          <button id="marginQuick" class="btn-ghost">Margin</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Minimal Modal (used for margin/pv/fv/pmt) -->
+
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <h3 id="modalTitle">Modal</h3>
+      <form id="modalForm">
+        <div id="modalFields"></div>
+        <div class="modal-actions">
+          <button id="modalCancel" class="btn-ghost" type="button">Cancel</button>
+          <button id="modalSubmit" class="btn-ghost" type="submit">Compute</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="calcVerse.js"></script>
+</body>
+</html>
