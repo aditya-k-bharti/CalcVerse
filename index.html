@@ -6,166 +6,436 @@
   <title>CalcVerse - Universal Calculator</title>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="calcVerse.css">
 </head>
 <body>
-  <div class="app">
-    <!-- Left: Calculator -->
+  <div class="container-fluid app-container">
+    <div class="row g-3 justify-content-center">
+      <!-- Left: Calculator -->
+      <div class="col-12 col-lg-8 col-xl-7">
+        <main class="card calculator-card" id="calculatorCard">
+          <header class="topbar">
+            <div class="brand">
+              <div class="logo">CalcV</div>
+              <div class="brand-text">
+                <h1>CalcVerse</h1>
+                <p class="muted">Universal Calculator</p>
+              </div>
+            </div>
+            <div class="spacer"></div>
+            <div class="controls">
+              <div class="theme-group">
+                <i id="themeIcon" class="bi bi-moon-stars-fill"></i>
+                <button id="themeToggle" class="toggle" aria-pressed="false" title="Toggle theme"></button>
+              </div>
+              <button id="openPanelMobile" class="btn-ghost mobile-only" title="Open panels">
+                <i class="bi bi-layout-sidebar-reverse"></i>
+              </button>
+            </div>
+          </header>
+          
+          <nav class="tabs" id="modeTabs" role="tablist" aria-label="Calculator modes">
+            <button class="tab active" data-mode="basic" type="button"><i class="bi bi-hash"></i> Basic</button>
+            <button class="tab" data-mode="scientific" type="button"><i class="bi bi-mortarboard"></i> Scientific</button>
+            <button class="tab" data-mode="financial" type="button"><i class="bi bi-bank"></i> Financial</button>
+            <button class="tab" data-mode="business" type="button"><i class="bi bi-building"></i> Business</button>
+            <button class="tab" data-mode="printing" type="button"><i class="bi bi-printer"></i> Printing</button>
+            <button class="tab" data-mode="programmable" type="button"><i class="bi bi-code-slash"></i> Programmable</button>
+            <button class="tab" data-mode="graph" type="button"><i class="bi bi-graph-up"></i> Graph</button>
+            <button class="tab" data-mode="converter" type="button"><i class="bi bi-arrow-left-right"></i> Converter</button>
+          </nav>
 
-    <main class="card calculator-card" id="calculatorCard">
-      <header class="topbar">
-        <div class="brand">
-          <div class="logo">CalcV</div>
-          <div class="brand-text">
-            <h1>CalcVerse</h1>
-            <p class="muted">Universal Calculator · Basic · Scientific · Financial · Business · Printing · Programmable</p>
+          <!-- ===== BASIC / SCIENTIFIC SECTION ===== -->
+          <section class="calc" id="calcBasicScientific">
+            <div class="display" aria-live="polite">
+              <div class="small" id="modeLabel"><i class="bi bi-info-circle"></i> Mode: Basic</div>
+              <div id="exprDisplay" class="expr"></div>
+              <div id="display" class="value">0</div>
+              <div id="errorDisplay" class="error-msg"></div>
+            </div>
+
+            <div id="keys" class="keys" role="group" aria-label="Calculator keys">
+              <!-- Desktop layout -->
+              <!-- row 1: Clear, Back, %, /, log, ln -->
+              <button class="key ghost" data-action="clear" type="button">C</button>
+              <button class="key ghost" data-action="back" type="button">←</button>
+              <button class="key ghost" data-action="percent" type="button">%</button>
+              <button class="key ghost" data-action="divide" type="button">÷</button>
+              <button class="key ghost sci desktop-sci" data-action="log" type="button">log</button>
+              <button class="key ghost sci desktop-sci" data-action="ln" type="button">ln</button>
+
+              <!-- row 2: 7, 8, 9, *, √, +/- -->
+              <button class="key" data-num="7" type="button">7</button>
+              <button class="key" data-num="8" type="button">8</button>
+              <button class="key" data-num="9" type="button">9</button>
+              <button class="key op" data-action="multiply" type="button">×</button>
+              <button class="key op ghost sci desktop-sci" data-action="sqrt" type="button">√</button>
+              <button class="key op ghost sci desktop-sci" data-action="plusminus" type="button">±</button>
+
+              <!-- row 3: 4, 5, 6, -, x², 1/x -->
+              <button class="key" data-num="4" type="button">4</button>
+              <button class="key" data-num="5" type="button">5</button>
+              <button class="key" data-num="6" type="button">6</button>
+              <button class="key op" data-action="subtract" type="button">-</button>
+              <button class="key op ghost sci desktop-sci" data-action="pow" type="button">x²</button>
+              <button class="key op ghost sci desktop-sci" data-action="inv" type="button">1/x</button>
+
+              <!-- row 4: 1, 2, 3, +, sin, cos -->
+              <button class="key" data-num="1" type="button">1</button>
+              <button class="key" data-num="2" type="button">2</button>
+              <button class="key" data-num="3" type="button">3</button>
+              <button class="key op" data-action="add" type="button">+</button>
+              <button class="key op ghost sci desktop-sci" data-action="sin" type="button">sin</button>
+              <button class="key op ghost sci desktop-sci" data-action="cos" type="button">cos</button>
+
+              <!-- row 5: 0 (wide), ., =, tan (wide) -->
+              <button class="key wide" data-num="0" type="button">0</button>
+              <button class="key" data-action="dot" type="button">.</button>
+              <button class="key strong" data-action="equals" type="button">=</button>
+              <button class="key op wide ghost sci desktop-sci" data-action="tan" type="button">tan</button>
+
+              <!-- Mobile Scientific Keys (hidden by default, shown when scientific mode is active) -->
+              <!-- row 6: margin, markup, √, +/- -->
+              <button class="key ghost sci mobile-sci" data-action="log" type="button">log</button>
+              <button class="key ghost sci mobile-sci" data-action="ln" type="button">ln</button>
+              <button class="key ghost sci mobile-sci" data-action="sqrt" type="button">√</button>
+              <button class="key ghost sci mobile-sci" data-action="plusminus" type="button">±</button>
+
+              <!-- row 7: x², 1/x, sin, cos -->
+              <button class="key ghost sci mobile-sci" data-action="pow" type="button">x²</button>
+              <button class="key ghost sci mobile-sci" data-action="inv" type="button">1/x</button>
+              <button class="key ghost sci mobile-sci" data-action="sin" type="button">sin</button>
+              <button class="key ghost sci mobile-sci" data-action="cos" type="button">cos</button>
+
+              <!-- row 8: tan !, (, ) -->
+              <button class="key ghost sci mobile-sci" data-action="tan" type="button">tan</button>
+              <button class="key ghost sci mobile-sci" data-action="factorial" type="button">!</button>
+              <button class="key ghost sci mobile-sci" data-action="openParen" type="button">(</button>
+              <button class="key ghost sci mobile-sci" data-action="closeParen" type="button">)</button>
+            </div>
+          </section>
+
+          <!-- ===== FINANCIAL SECTION ===== -->
+          <section class="calc calc-panel hidden" id="calcFinancial">
+            <div class="display" aria-live="polite">
+              <div class="small"><i class="bi bi-bank"></i> Financial Calculator</div>
+              <div id="financialResult" class="value fin-result">Select a calculator</div>
+            </div>
+            <div class="financial-tabs">
+              <button class="fin-tab active" data-fin="emi" type="button"><i class="bi bi-credit-card"></i> EMI</button>
+              <button class="fin-tab" data-fin="compound" type="button"><i class="bi bi-graph-up-arrow"></i> Compound</button>
+              <button class="fin-tab" data-fin="discount" type="button"><i class="bi bi-tag"></i> Discount</button>
+            </div>
+            <!-- EMI -->
+            <div class="fin-panel" id="finEmi">
+              <div class="row g-2">
+                <div class="col-12">
+                  <label class="form-label">Loan Amount</label>
+                  <input type="number" class="form-control cv-input" id="emiPrincipal" placeholder="e.g. 500000">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Interest Rate (% p.a.)</label>
+                  <input type="number" class="form-control cv-input" id="emiRate" placeholder="e.g. 8.5" step="0.01">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Tenure (months)</label>
+                  <input type="number" class="form-control cv-input" id="emiTenure" placeholder="e.g. 60">
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-cv w-100" id="emiCalcBtn" type="button"><i class="bi bi-calculator"></i> Calculate EMI</button>
+                </div>
+                <div class="col-12" id="emiResultArea"></div>
+              </div>
+            </div>
+            <!-- Compound Interest -->
+            <div class="fin-panel hidden" id="finCompound">
+              <div class="row g-2">
+                <div class="col-6">
+                  <label class="form-label">Principal</label>
+                  <input type="number" class="form-control cv-input" id="ciPrincipal" placeholder="e.g. 100000">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Rate (% p.a.)</label>
+                  <input type="number" class="form-control cv-input" id="ciRate" placeholder="e.g. 7" step="0.01">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Time (years)</label>
+                  <input type="number" class="form-control cv-input" id="ciTime" placeholder="e.g. 5">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Compounding</label>
+                  <select class="form-select cv-input" id="ciCompound">
+                    <option value="1">Yearly</option>
+                    <option value="2">Half-Yearly</option>
+                    <option value="4">Quarterly</option>
+                    <option value="12" selected>Monthly</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-cv w-100" id="ciCalcBtn" type="button"><i class="bi bi-calculator"></i> Calculate</button>
+                </div>
+                <div class="col-12" id="ciResultArea"></div>
+              </div>
+            </div>
+            <!-- Discount -->
+            <div class="fin-panel hidden" id="finDiscount">
+              <div class="row g-2">
+                <div class="col-6">
+                  <label class="form-label">Original Price</label>
+                  <input type="number" class="form-control cv-input" id="discOriginal" placeholder="e.g. 2000">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Discount (%)</label>
+                  <input type="number" class="form-control cv-input" id="discPercent" placeholder="e.g. 25" step="0.01">
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-cv w-100" id="discCalcBtn" type="button"><i class="bi bi-calculator"></i> Calculate</button>
+                </div>
+                <div class="col-12" id="discResultArea"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== BUSINESS SECTION ===== -->
+          <section class="calc calc-panel hidden" id="calcBusiness">
+            <div class="display" aria-live="polite">
+              <div class="small"><i class="bi bi-building"></i> Business Calculator</div>
+              <div id="businessResult" class="value fin-result">Select a calculator</div>
+            </div>
+            <div class="business-tabs">
+              <button class="biz-tab active" data-biz="margin" type="button"><i class="bi bi-percent"></i> Margin</button>
+              <button class="biz-tab" data-biz="markup" type="button"><i class="bi bi-arrow-up-circle"></i> Markup</button>
+            </div>
+            <!-- Margin -->
+            <div class="biz-panel" id="bizMargin">
+              <div class="row g-2">
+                <div class="col-6">
+                  <label class="form-label">Cost Price</label>
+                  <input type="number" class="form-control cv-input" id="marginCost" placeholder="e.g. 500" step="any">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Selling Price</label>
+                  <input type="number" class="form-control cv-input" id="marginSelling" placeholder="e.g. 800" step="any">
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-cv w-100" id="marginCalcBtn" type="button"><i class="bi bi-calculator"></i> Calculate Margin</button>
+                </div>
+                <div class="col-12" id="marginResultArea"></div>
+              </div>
+            </div>
+            <!-- Markup -->
+            <div class="biz-panel hidden" id="bizMarkup">
+              <div class="row g-2">
+                <div class="col-6">
+                  <label class="form-label">Cost Price</label>
+                  <input type="number" class="form-control cv-input" id="markupCost" placeholder="e.g. 500" step="any">
+                </div>
+                <div class="col-6">
+                  <label class="form-label">Selling Price</label>
+                  <input type="number" class="form-control cv-input" id="markupSelling" placeholder="e.g. 800" step="any">
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-cv w-100" id="markupCalcBtn" type="button"><i class="bi bi-calculator"></i> Calculate Markup</button>
+                </div>
+                <div class="col-12" id="markupResultArea"></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ===== PRINTING SECTION ===== -->
+          <section class="calc calc-panel hidden" id="calcPrinting">
+            <div class="display" aria-live="polite">
+              <div class="small"><i class="bi bi-printer"></i> Printing Calculator</div>
+              <div id="printingDisplay" class="value fin-result" >0</div>
+            </div>
+            <div class="printing-tape" id="printingTape">
+              <div class="tape-header">
+                <span class="tape-title"><i class="bi bi-receipt"></i> Tape</span>
+                <div class="tape-actions">
+                  <button class="btn-ghost" id="clearTapeBtn" type="button"><i class="bi bi-trash3"></i> Clear</button>
+                  <button class="btn-ghost" id="printTapeBtn" type="button"><i class="bi bi-printer"></i> Print</button>
+                </div>
+              </div>
+              <div class="tape-list" id="tapeList">
+                <div class="muted">Start calculating to see tape</div>
+              </div>
+            </div>
+            <div id="printingKeys" class="keys printing-keys" role="group" aria-label="Printing calculator keys">
+              <button class="key ghost" data-paction="clear" type="button">C</button>
+              <button class="key ghost" data-paction="back" type="button">←</button>
+              <button class="key ghost" data-paction="percent" type="button">%</button>
+              <button class="key op" data-paction="divide" type="button">÷</button>
+
+              <button class="key" data-pnum="7" type="button">7</button>
+              <button class="key" data-pnum="8" type="button">8</button>
+              <button class="key" data-pnum="9" type="button">9</button>
+              <button class="key op" data-paction="multiply" type="button">×</button>
+
+              <button class="key" data-pnum="4" type="button">4</button>
+              <button class="key" data-pnum="5" type="button">5</button>
+              <button class="key" data-pnum="6" type="button">6</button>
+              <button class="key op" data-paction="subtract" type="button">−</button>
+
+              <button class="key" data-pnum="1" type="button">1</button>
+              <button class="key" data-pnum="2" type="button">2</button>
+              <button class="key" data-pnum="3" type="button">3</button>
+              <button class="key op" data-paction="add" type="button">+</button>
+
+              <button class="key wide" data-pnum="0" type="button">0</button>
+              <button class="key" data-paction="dot" type="button">.</button>
+              <button class="key strong" data-paction="equals" type="button">=</button>
+            </div>
+          </section>
+
+          <!-- ===== PROGRAMMABLE SECTION ===== -->
+          <section class="calc calc-panel hidden" id="calcProgrammable">
+            <div class="display" aria-live="polite">
+              <div class="small"><i class="bi bi-code-slash"></i> Programmer Calculator</div>
+              <div id="progResult" class="value prog-result">Enter a number</div>
+            </div>
+            <div class="row g-2 mt-2">
+              <div class="col-6">
+                <label class="form-label">Input Base</label>
+                <select id="progFromBase" class="form-select cv-input">
+                  <option value="10">Decimal (10)</option>
+                  <option value="2">Binary (2)</option>
+                  <option value="8">Octal (8)</option>
+                  <option value="16">Hexadecimal (16)</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label">Input Value</label>
+                <input type="text" class="form-control cv-input" id="progInput" placeholder="e.g. 255">
+              </div>
+              <div class="col-12">
+                <button class="btn btn-cv w-100" id="progConvertBtn" type="button"><i class="bi bi-arrow-repeat"></i> Convert</button>
+              </div>
+            </div>
+            <div class="prog-results mt-3" id="progResultsArea">
+              <div class="prog-row"><span class="prog-label"><i class="bi bi-0-circle"></i> Decimal</span><span class="prog-val" id="progDec">—</span></div>
+              <div class="prog-row"><span class="prog-label"><i class="bi bi-1-circle"></i> Binary</span><span class="prog-val" id="progBin">—</span></div>
+              <div class="prog-row"><span class="prog-label"><i class="bi bi-8-circle"></i> Octal</span><span class="prog-val" id="progOct">—</span></div>
+              <div class="prog-row"><span class="prog-label"><i class="bi bi-hash"></i> Hexadecimal</span><span class="prog-val" id="progDec">—</span></div>
+            </div>
+          </section>
+
+          <!-- ===== GRAPH SECTION ===== -->
+          <section class="calc calc-panel hidden" id="calcGraph">
+            <div class="display" aria-live="polite">
+              <div class="small"><i class="bi bi-graph-up"></i> Graph Calculator</div>
+              <div class="plot-graph">Enter a funtion of x to plot</div>
+            </div>
+            <div class="row g-2 mt-2">
+              <div class="col-8">
+                <label class="form-label">f(x) =</label>
+                <input type="text" class="form-control cv-input" id="graphFunc" placeholder="e.g. Math.sin(x), x*x, 2*x+1">
+              </div>
+              <div class="col-4">
+                <label class="form-label">Range</label>
+                <select id="graphRange" class="form-select cv-input">
+                  <option value="10" selected>-10 to 10</option>
+                  <option value="20">-20 to 20</option>
+                  <option value="50">-50 to 50</option>
+                  <option value="5">-5 to 5</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-cv w-100" id="graphPlotBtn" type="button"><i class="bi bi-pencil-square"></i> Plot Graph</button>
+              </div>
+            </div>
+            <div class="graph-container mt-3">
+              <canvas id="graphCanvas" width="600" height="350"></canvas>
+            </div>
+          </section>
+
+          <!-- ===== UNIT CONVERTER SECTION ===== -->
+          <section class="calc calc-panel hidden" id="calcConverter">
+            <div class="display" aria-live="polite">
+              <div class="small"><i class="bi bi-arrow-left-right"></i> Unit Converter</div>
+              <div id="converterResult" class="value fin-result">Select a category</div>
+            </div>
+            <div class="converter-tabs">
+              <button class="convo-tab active" data-conv="length" type="button"><i class="bi bi-rulers"></i> Length</button>
+              <button class="convo-tab" data-conv="weight" type="button"><i class="bi bi-box-seam"></i> Weight</button>
+              <button class="convo-tab" data-conv="temperature" type="button"><i class="bi bi-thermometer-half"></i> Temperature</button>
+              <button class="convo-tab" data-conv="speed" type="button"><i class="bi bi-speedometer2"></i> Speed</button>
+            </div>
+            <div class="row g-2 mt-2">
+              <div class="col-12">
+                <label class="form-label">Value</label>
+                <input type="number" class="form-control cv-input" id="convValue" placeholder="Enter Value" step="any">
+              </div>
+              <div class="col-6">
+                <label class="form-label">From</label>
+                <select class="form-select cv-input"  id="convFrom">
+                  <option value="m">Meter</option>
+                  <option value="km">Kilometer</option>
+                  <option value="cm">Centimeter</option>
+                </select>
+              </div>
+              <div class="col-6">
+                <label class="form-label">To</label>
+                <select class="form-select cv-input" id="convTo">
+                  <option value="km">Kilometer</option>
+                  <option value="m">Meter</option>
+                  <option value="cm">Centimeter</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <button class="btn btn-cv w-100" id="convCalcBtn" type="button"><i class="bi bi-arrow-repeat"></i> Convert</button>
+              </div>
+              <div class="col-12" id="convoResultArea"></div>
+            </div>
+          </section>
+        </main>
+      </div> 
+
+      <!-- Right: panels (desktop) / drawer (mobile) -->
+      <div class="col-12 col-lg-4 col-xl-3">
+        <aside class="side" id="sidePanels">
+          <div class="card">
+            <div class="panel-title"><i class="bi bi-memory"></i> Memory</div>
+            <div class="memory-row">
+              <div id="memoryValue" class="memory-value">0</div>
+              <div class="chip-row mt-2">
+                <button class="chip" id="mc" type="button">MC</button>
+                <button class="chip" id="mr" type="button">MR</button>
+                <button class="chip" id="mplus" type="button">M+</button>
+                <button class="chip" id="mminus" type="button">M-</button>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <div class="spacer"></div>
-
-        <div class="controls">
-          <div class="theme-group">
-            <span class="muted">Theme</span>
-            <button id="themeToggle" class="toggle" aria-pressed="false" title="Toggle theme"></button>
+          <div class="card">
+            <div class="panel-title"><i class="bi bi-clock-history"></i> History</div>
+            <div id="historyList" class="history-list">
+              <div class="muted">No history yet</div>
+            </div>
+            <div class="history-actions">
+              <button class="btn-ghost" id="clearHistory">Clear</button>
+              <button class="btn-ghost" id="printHistory">Print</button>
+            </div>
           </div>
-          <button id="openPanelMobile" class="btn-ghost mobile-only" title="Open panels (mobile)">Panels</button>
-        </div>
-      </header>
 
-      <nav class="tabs" id="modeTabs" role="tablist" aria-label="Calculator modes">
-        <button class="tab active" data-mode="basic" type="button">Basic</button>
-        <button class="tab" data-mode="scientific" type="button">Scientific</button>
-        <button class="tab" data-mode="financial" type="button">Financial</button>
-        <button class="tab" data-mode="business" type="button">Business</button>
-        <button class="tab" data-mode="printing" type="button">Printing</button>
-        <button class="tab" data-mode="programmable" type="button">Programmable</button>
-      </nav>
-
-      <section class="calc">
-        <div class="display" aria-live="polite">
-          <div class="small" id="modeLabel">Mode: Basic</div>
-          <!-- Full expression line -->
-
-          <div id="exprDisplay" class="expr"></div>
-          <!-- Main big text (current / result) -->
-
-          <div id="display" class="value">0</div>
-        </div>
-
-        <!-- Keys grid: arranged to match design with scientific keys next to operators -->
-
-        <div id="keys" class="keys" role="group" aria-label="Calculator keys">
-          <!-- Desktop layout -->
-          <!-- row 1: Clear, Back, %, /, Margin, Markup -->
-
-          <button class="key ghost" data-action="clear" type="button">C</button>
-          <button class="key ghost" data-action="back" type="button">←</button>
-          <button class="key ghost" data-action="percent" type="button">%</button>
-          <button class="key ghost" data-action="divide" type="button">/</button>
-          <button class="key ghost sci desktop-sci" data-action="margin" type="button">Margin</button>
-          <button class="key ghost sci desktop-sci" data-action="markup" type="button">Markup</button>
-
-          <!-- row 2: 7, 8, 9, *, √, +/- -->
-
-          <button class="key" data-num="7" type="button">7</button>
-          <button class="key" data-num="8" type="button">8</button>
-          <button class="key" data-num="9" type="button">9</button>
-          <button class="key op" data-action="multiply" type="button">*</button>
-          <button class="key op ghost sci desktop-sci" data-action="sqrt" type="button">√</button>
-          <button class="key op ghost sci desktop-sci" data-action="plusminus" type="button">+/-</button>
-
-          <!-- row 3: 4, 5, 6, -, x², 1/x -->
-
-          <button class="key" data-num="4" type="button">4</button>
-          <button class="key" data-num="5" type="button">5</button>
-          <button class="key" data-num="6" type="button">6</button>
-          <button class="key op" data-action="subtract" type="button">-</button>
-          <button class="key op ghost sci desktop-sci" data-action="pow" type="button">x²</button>
-          <button class="key op ghost sci desktop-sci" data-action="inv" type="button">1/x</button>
-
-          <!-- row 4: 1, 2, 3, +, sin, cos -->
-
-          <button class="key" data-num="1" type="button">1</button>
-          <button class="key" data-num="2" type="button">2</button>
-          <button class="key" data-num="3" type="button">3</button>
-          <button class="key op" data-action="add" type="button">+</button>
-          <button class="key op ghost sci desktop-sci" data-action="sin" type="button">sin</button>
-          <button class="key op ghost sci desktop-sci" data-action="cos" type="button">cos</button>
-
-          <!-- row 5: 0 (wide), ., =, tan -->
-
-          <button class="key wide" data-num="0" type="button">0</button>
-          <button class="key" data-action="dot" type="button">.</button>
-          <button class="key strong" data-action="equals" type="button">=</button>
-          <button class="key op wide ghost sci desktop-sci" data-action="tan" type="button">tan</button>
-
-          <!-- Mobile Scientific Keys (hidden by default, shown when scientific mode is active) -->
-          <!-- row 6: margin, markup, √, +/- -->
-
-          <button class="key ghost sci mobile-sci" data-action="margin" type="button">Margin</button>
-          <button class="key ghost sci mobile-sci" data-action="markup" type="button">Markup</button>
-          <button class="key ghost sci mobile-sci" data-action="sqrt" type="button">√</button>
-          <button class="key ghost sci mobile-sci" data-action="plusminus" type="button">+/-</button>
-
-          <!-- row 7: x², 1/x, sin, cos -->
-
-          <button class="key ghost sci mobile-sci" data-action="pow" type="button">x²</button>
-          <button class="key ghost sci mobile-sci" data-action="inv" type="button">1/x</button>
-          <button class="key ghost sci mobile-sci" data-action="sin" type="button">sin</button>
-          <button class="key ghost sci mobile-sci" data-action="cos" type="button">cos</button>
-
-          <!-- row 8: tan -->
-
-          <button class="key ghost sci mobile-sci" data-action="tan" type="button">tan</button>
-          <button class="key ghost sci mobile-sci" data-action="factorial" type="button">!</button>
-          <button class="key ghost sci mobile-sci" data-action="openParen" type="button">(</button>
-          <button class="key ghost sci mobile-sci" data-action="closeParen" type="button">)</button>
-        </div>
-      </section>
-    </main>
-
-    <!-- Right: panels (desktop) / drawer (mobile) -->
-
-    <aside class="side" id="sidePanels">
-      <div class="card">
-        <div class="panel-title">Memory</div>
-        <div class="memory-row">
-          <div id="memoryValue" class="memory-value">0</div>
-          <div class="chip-row">
-            <button class="chip" id="mc" type="button">MC</button>
-            <button class="chip" id="mr" type="button">MR</button>
-            <button class="chip" id="mplus" type="button">M+</button>
-            <button class="chip" id="mminus" type="button">M-</button>
+          <div class="card">
+            <div class="panel-title"><i class="bi bi-lightning"></i> Quick</div>
+            <div class="quick">
+              <button id="copyBtn" class="btn-ghost">Copy</button>
+              <button id="pasteBtn" class="btn-ghost"><i class="bi bi-clipboard-check"></i> Paste</button>
+              <button id="pvfmpt" class="btn-ghost">PV/FV/PMT</button>
+              <button id="marginQuick" class="btn-ghost">Margin</button>
+            </div>
           </div>
-        </div>
-      </div>
 
-      <div class="card">
-        <div class="panel-title">History</div>
-        <div id="historyList" class="history-list">
-          <div class="muted">No history yet</div>
-        </div>
-        <div class="history-actions">
-          <button class="btn-ghost" id="clearHistory">Clear</button>
-          <button class="btn-ghost" id="printHistory">Print</button>
-        </div>
+          <!-- Close button for mobile drawer -->
+          <button class="btn-ghost close-drawer-btn mobile-only" id="closeDrawerBtn"><i class="bi bi-x-lg"></i> Close</button>
+        </aside>
       </div>
-
-      <div class="card">
-        <div class="panel-title">Quick</div>
-        <div class="muted">Common helpers</div>
-        <div class="quick">
-          <button id="copyBtn" class="btn-ghost">Copy</button>
-          <button id="pvfmpt" class="btn-ghost">PV/FV/PMT</button>
-          <button id="marginQuick" class="btn-ghost">Margin</button>
-        </div>
-      </div>
-    </aside>
+    </div>
   </div>
 
   <!-- Minimal Modal (used for margin/pv/fv/pmt) -->
-
   <div id="modal" class="modal" aria-hidden="true">
     <div class="modal-card">
       <h3 id="modalTitle">Modal</h3>
@@ -179,6 +449,37 @@
     </div>
   </div>
 
+  <!-- Professional Footer -->
+  <footer class="cv-footer">
+    <div class="container-fluid">
+      <div class="row g-3 align-items-center">
+        <div class="col-12 col-md-4 text-center text-md-start">
+          <div class="footer-brand">
+            <i class="bi bi-calculator-fill"></i>
+            <span>CalcVerse</span>
+          </div>
+          <p class="footer-tagline">Your universal calculation companion</p>
+        </div>
+        <div class="col-12 col-md-4 text-center">
+          <div class="footer-links">
+            <span class="footer-link"><i class="bi bi-hash"></i> Basic</span>
+            <span class="footer-link"><i class="bi bi-mortarboard"></i> Scientific</span>
+            <span class="footer-link"><i class="bi bi-bank"></i> Financial</span>
+            <span class="footer-link"><i class="bi bi-code-slash"></i> Programmer</span>
+          </div>
+        </div>
+        <div class="col-12 col-md-4 text-center text-md-end">
+          <div class="footer-social">
+            <a href="#" class="social-icon" title="GitHub"><i class="bi bi-github"></i></a>
+            <a href="#" class="social-icon" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          </div>
+          <p class="footer-copy">© 2026 CalcVerse. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
   <script src="calcVerse.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
