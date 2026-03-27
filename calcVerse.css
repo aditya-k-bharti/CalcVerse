@@ -883,6 +883,9 @@ button {
 }
 
 .cv-drop-menu{
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: none;
   position: absolute;
   width: 100%;
@@ -895,6 +898,15 @@ button {
 
 .cv-drop-menu.show{
   display: block;
+}
+
+.cv-drop-menu::-webkit-scrollbar{
+  width: 6px;
+}
+
+.cv-drop-menu::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
 }
 
 .cv-drop-item{
