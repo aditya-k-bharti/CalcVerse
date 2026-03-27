@@ -166,12 +166,15 @@
                 </div>
                 <div class="col-6">
                   <label class="form-label">Compounding</label>
-                  <select class="form-select cv-input" id="ciCompound">
-                    <option value="1">Yearly</option>
-                    <option value="2">Half-Yearly</option>
-                    <option value="4">Quarterly</option>
-                    <option value="12" selected>Monthly</option>
-                  </select>
+                  <div class="cv-dropdown w-100" data-target="ciCompound">
+                    <button class="btn btn-cv w-100 dropdown-toggle cv-drop-btn">Monthly</button>
+                    <div class="cv-drop-menu">
+                      <div class="cv-drop-item" data-value="1">Yearly</div>
+                      <div class="cv-drop-item" data-value="2">Half-Yearly</div>
+                      <div class="cv-drop-item" data-value="4">Quarterly</div>
+                      <div class="cv-drop-item" data-value="12">Monthly</div>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-12">
                   <button class="btn btn-cv w-100" id="ciCalcBtn" type="button"><i class="bi bi-calculator"></i> Calculate</button>
@@ -298,12 +301,15 @@
             <div class="row g-2 mt-2">
               <div class="col-6">
                 <label class="form-label">Input Base</label>
-                <select id="progFromBase" class="form-select cv-input">
-                  <option value="10">Decimal (10)</option>
-                  <option value="2">Binary (2)</option>
-                  <option value="8">Octal (8)</option>
-                  <option value="16">Hexadecimal (16)</option>
-                </select>
+                <div class="cv-dropdown w-100" data-target="progFromBase">
+                  <button class="btn btn-cv w-100 dropdown-toggle cv-drop-btn">Decimal (10)</button>
+                  <div class="cv-drop-menu">
+                    <div class="cv-drop-item" data-value="10">Decimal (10)</div>
+                    <div class="cv-drop-item" data-value="2">Binary (2)</div>
+                    <div class="cv-drop-item" data-value="8">Octal (8)</div>
+                    <div class="cv-drop-item" data-value="16">Hexadecimal (16)</div>
+                  </div>
+                </div>
               </div>
               <div class="col-6">
                 <label class="form-label">Input Value</label>
@@ -317,7 +323,7 @@
               <div class="prog-row"><span class="prog-label"><i class="bi bi-0-circle"></i> Decimal</span><span class="prog-val" id="progDec">—</span></div>
               <div class="prog-row"><span class="prog-label"><i class="bi bi-1-circle"></i> Binary</span><span class="prog-val" id="progBin">—</span></div>
               <div class="prog-row"><span class="prog-label"><i class="bi bi-8-circle"></i> Octal</span><span class="prog-val" id="progOct">—</span></div>
-              <div class="prog-row"><span class="prog-label"><i class="bi bi-hash"></i> Hexadecimal</span><span class="prog-val" id="progDec">—</span></div>
+              <div class="prog-row"><span class="prog-label"><i class="bi bi-hash"></i> Hexadecimal</span><span class="prog-val" id="progHex">—</span></div>
             </div>
           </section>
 
@@ -334,12 +340,15 @@
               </div>
               <div class="col-4">
                 <label class="form-label">Range</label>
-                <select id="graphRange" class="form-select cv-input">
-                  <option value="10" selected>-10 to 10</option>
-                  <option value="20">-20 to 20</option>
-                  <option value="50">-50 to 50</option>
-                  <option value="5">-5 to 5</option>
-                </select>
+                <div class="cv-dropdown w-100" data-target="graphRange">
+                  <button class="btn btn-cv w-100 dropdown-toggle cv-drop-btn">-10 to 10</button>
+                  <div class="cv-drop-menu">
+                    <div class="cv-drop-item" data-value="5">-5 to 5</div>
+                    <div class="cv-drop-item" data-value="10">-10 to 10</div>
+                    <div class="cv-drop-item" data-value="20">-20 to 20</div>
+                    <div class="cv-drop-item" data-value="50">-50 to 50</div>
+                  </div>
+                </div>
               </div>
               <div class="col-12">
                 <button class="btn btn-cv w-100" id="graphPlotBtn" type="button"><i class="bi bi-pencil-square"></i> Plot Graph</button>
@@ -367,21 +376,32 @@
                 <label class="form-label">Value</label>
                 <input type="number" class="form-control cv-input" id="convValue" placeholder="Enter Value" step="any">
               </div>
-              <div class="col-6">
+              <div class="col-5">
                 <label class="form-label">From</label>
-                <select class="form-select cv-input"  id="convFrom">
-                  <option value="m">Meter</option>
-                  <option value="km">Kilometer</option>
-                  <option value="cm">Centimeter</option>
-                </select>
+                <div class="cv-dropdown w-100" data-target="convFrom">
+                  <button class="btn btn-cv w-100 dropdown-toggle cv-drop-btn">Meter</button>
+                  <div class="cv-drop-menu">
+                    <div class="cv-drop-item" data-value="cm">Centimeter</div>
+                    <div class="cv-drop-item" data-value="m">Meter</div>
+                    <div class="cv-drop-item" data-value="km">Kilometer</div>
+                  </div>
+                </div>
               </div>
-              <div class="col-6">
+              <div class="col-2 d-flex justify-content-center">
+                <button id="swapUnits" class="btn btn-cv mt-4">
+                  <i class="bi bi-arrow-left-right"></i> Swap
+                </button>
+              </div>
+              <div class="col-5">
                 <label class="form-label">To</label>
-                <select class="form-select cv-input" id="convTo">
-                  <option value="km">Kilometer</option>
-                  <option value="m">Meter</option>
-                  <option value="cm">Centimeter</option>
-                </select>
+                <div class="cv-dropdown w-100" data-target="convTo">
+                  <button class="btn btn-cv w-100 dropdown-toggle cv-drop-btn">Kilometer</button>
+                  <div class="cv-drop-menu">
+                    <div class="cv-drop-item" data-value="cm">Centimeter</div>
+                    <div class="cv-drop-item" data-value="m">Meter</div>
+                    <div class="cv-drop-item" data-value="km">Kilometer</div>
+                  </div>
+                </div>
               </div>
               <div class="col-12">
                 <button class="btn btn-cv w-100" id="convCalcBtn" type="button"><i class="bi bi-arrow-repeat"></i> Convert</button>

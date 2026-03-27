@@ -877,6 +877,36 @@ button {
   }
 }
 
+/* ===== Dropdown ===== */
+.cv-dropdown{
+  position: relative;
+}
+
+.cv-drop-menu{
+  display: none;
+  position: absolute;
+  width: 100%;
+  background: var(--panel);
+  border-radius: 10px;
+  margin-top: 5px;
+  z-index: 100;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cv-drop-menu.show{
+  display: block;
+}
+
+.cv-drop-item{
+  padding: 10px;
+  cursor: pointer;
+  color: var(--accent);
+}
+
+.cv-drop-item:hover{
+  background: var(--button-hover);
+}
+
 /* ===== FOOTER ===== */
 .cv-footer {
   margin-top: 30px;
