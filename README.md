@@ -1,111 +1,125 @@
-# 🧮 CalcVerse — Universal Calculator
- 
-<div align="center">
-![CalcVerse Banner](https://img.shields.io/badge/CalcVerse-Universal%20Calculator-6c63ff?style=for-the-badge&logo=calculator&logoColor=white)
- 
-[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Netlify-00C7B7?style=for-the-badge&logo=netlify)](http://adityakbharti-calcverse.netlify.app)
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/aditya-k-bharti/CalcVerse)
-![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Bootstrap](https://img.shields.io/badge/Bootstrap_5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
- 
-**CalcVerse** is a feature-rich, all-in-one web calculator built with vanilla HTML, CSS, and JavaScript.  
-It combines 8 different calculator modes into a single elegant interface — with dark/light theme support.
- 
-</div>
+# 🧮 CalcVerse
+> A universal calculator suite built with vanilla HTML, CSS, JavaScript, and Bootstrap 5 — covering everything from basic arithmetic to graph plotting.
+
+**Live Demo → [adityakbharti-calcverse.netlify.app](https://adityakbharti-calcverse.netlify.app)**
+
 ---
- 
+
+## 🖩 Calculators
+
+### 🔢 Basic
+Standard arithmetic — add, subtract, multiply, divide, percentage, and sign toggle. Clean keypad with backspace and full expression display.
+
+### 🎓 Scientific
+Extends Basic with trigonometric functions (sin, cos, tan), logarithms (log, ln), square root, power (x²), reciprocal (1/x), factorial, and parentheses. Scientific keys appear inline on desktop and as an extra row on mobile.
+
+### 🏦 Financial
+Three sub-calculators in one panel:
+- **EMI** — loan amount, interest rate, and tenure → monthly instalment + total payment
+- **Compound Interest** — principal, rate, time, and compounding frequency → maturity amount
+- **Discount** — original price + discount % → discounted price and savings
+
+### 🏢 Business
+- **Margin** — cost and selling price → gross margin %
+- **Markup** — cost and selling price → markup %
+
+### 🖨️ Printing
+A tape-style calculator that logs every operation to a scrollable receipt. Supports clear tape and print tape actions.
+
+### 💻 Programmable
+Convert any number between **Decimal**, **Binary**, **Octal**, and **Hexadecimal** in one click. Input base is selectable via dropdown.
+
+### 📈 Graph
+Plot any JavaScript math expression `f(x)` on an HTML5 Canvas with a configurable x-range (±5, ±10, ±20, ±50).
+
+### 🔄 Unit Converter
+Convert values across four categories:
+- **Length** — cm, m, km, and more
+- **Weight** — g, kg, lb, and more
+- **Temperature** — °C, °F, K
+- **Speed** — m/s, km/h, mph
+
+---
+
 ## ✨ Features
- 
-### 8 Calculator Modes
-| Mode | Description |
-|------|-------------|
-| 🔢 **Basic** | Standard arithmetic operations |
-| 🎓 **Scientific** | Trigonometry, logarithms, powers, roots |
-| 🏦 **Financial** | EMI, Compound Interest, Discounts |
-| 🏢 **Business** | Profit, Margin, Markup, Tax, Break-even |
-| 🖨️ **Printing** | Paper tape–style calculation log |
-| 💻 **Programmable** | Binary, Octal, Hexadecimal conversions |
-| 📈 **Graph** | Visual function plotting (coming soon) |
-| 🔁 **Converter** | Length, Weight, Temperature, Speed |
- 
-### Other Highlights
-- 🌙 **Dark / Light Theme** toggle
-- 🧠 **Memory functions** — MC, MR, M+, M−
-- 🕓 **Calculation History** with print support
-- ⚡ **Quick Actions** — Copy, Paste, PV/FV/PMT, Margin
-- 📱 **Fully Responsive** — works on mobile & desktop
-- 🎯 **Keyboard Support** for fast input
+
+- 🌗 **Dark / Light theme** — one-click toggle with persistent preference
+- 📋 **Calculation history** — scrollable log with clear and print options
+- 💾 **Memory panel** — MC, MR, M+, M− for storing and recalling values
+- ⚡ **Quick actions** — Copy result, Paste, PV/FV/PMT shortcut, Margin shortcut
+- 📱 **Fully responsive** — Bootstrap 5 grid, works on mobile and desktop
+- ⌨️ **Keyboard support** — type numbers and operators directly in Basic/Scientific modes
+- 🔤 **Bootstrap Icons** — used throughout the UI
+
 ---
- 
-## 🚀 Live Demo
- 
-👉 **[http://adityakbharti-calcverse.netlify.app](http://adityakbharti-calcverse.netlify.app)**
- 
----
- 
-## 🛠️ Tech Stack
- 
-- **HTML5** — Semantic structure
-- **CSS3** — Custom properties, responsive layout
-- **Vanilla JavaScript** — Zero dependencies for core logic
-- **Bootstrap 5** — UI components & grid
-- **Bootstrap Icons** — Icon set
-- **Google Fonts (Inter)** — Typography
----
- 
-## 📁 Project Structure
- 
+
+## 🗂️ Project Structure
+
 ```
 CalcVerse/
-├── index.html       # Main HTML — all calculator sections
-├── calcVerse.css    # Styles — themes, layout, components
-└── calcVerse.js     # Logic — all calculator modes & interactions
+├── index.html       # Main app — all calculator panels in one page
+├── calcVerse.css    # Global theme, layout, and component styles
+└── calcVerse.js     # All calculator logic (basic, sci, financial, graph, converter…)
 ```
- 
+
 ---
- 
-## 🧑‍💻 Getting Started
- 
-No build tools or dependencies needed. Just clone and open!
- 
+
+## 🛠️ Tech Stack
+
+| Technology | Usage |
+|---|---|
+| HTML5 | Structure & Canvas (graph) |
+| CSS3 | Custom theme, responsive layout, animations |
+| JavaScript (ES6+) | All calculator and converter logic |
+| [Bootstrap 5](https://getbootstrap.com/) | Grid, layout utilities |
+| [Bootstrap Icons](https://icons.getbootstrap.com/) | UI icons |
+| [Google Fonts – Inter](https://fonts.google.com/specimen/Inter) | Typography |
+
+---
+
+## 🚀 Run Locally
+
+No build tools needed — pure vanilla project.
+
 ```bash
-# Clone the repo
 git clone https://github.com/aditya-k-bharti/CalcVerse.git
- 
-# Navigate into the folder
 cd CalcVerse
- 
-# Open in browser
-open index.html
 ```
- 
-Or simply open `index.html` in any modern browser.
- 
+
+Then just open `index.html` in your browser, or use a local server:
+
+```bash
+# With VS Code → Live Server extension (recommended)
+# OR with Python
+python -m http.server 8000
+```
+
 ---
- 
-## 📸 Screenshots
- 
-> *(Add screenshots of the app here for best results)*  
-> Tip: Use `![Screenshot](./screenshots/dark.png)` after adding images to the repo.
- 
+
+## 📸 Modes
+
+| Mode | Description |
+|---|---|
+| Basic | Standard arithmetic calculator |
+| Scientific | Trig, log, sqrt, power, factorial |
+| Financial | EMI, compound interest, discount |
+| Business | Profit margin and markup |
+| Printing | Tape-style calculator with print |
+| Programmable | Number base converter (Dec/Bin/Oct/Hex) |
+| Graph | f(x) plotter on HTML5 Canvas |
+| Converter | Length, weight, temperature, speed |
+
 ---
- 
-## 🙋‍♂️ Author
- 
-**Aditya Kumar Bharti**  
+
+## 🙌 Author
+
+**Aditya Kumar Bharti**
+
 [![GitHub](https://img.shields.io/badge/GitHub-aditya--k--bharti-181717?style=flat&logo=github)](https://github.com/aditya-k-bharti)
- 
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-aditya--kumar--bharti-0077B5?style=flat&logo=linkedin)](https://linkedin.com/in/aditya-kumar-bharti-dev-6214b6354)
+
 ---
- 
+
 ## 📄 License
- 
-This project is open source and available under the [MIT License](LICENSE).
- 
----
- 
-<div align="center">
-  Made with ❤️ by Aditya Kumar Bharti
-</div>
- 
+
+MIT License — feel free to fork, modify, and use.
